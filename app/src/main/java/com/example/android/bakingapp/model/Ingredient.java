@@ -3,14 +3,15 @@ package com.example.android.bakingapp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Ingredient implements Parcelable {
 
-
+    /**
+     * Initialize the variables
+     */
     @SerializedName("quantity")
     @Expose
     private String quantity;
@@ -52,28 +53,18 @@ public class Ingredient implements Parcelable {
         }
     };
 
+    // Get the Quantity
     public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
-
+    // Get the measure
     public String getMeasure() {
         return measure;
     }
 
-    public void setMeasure(String measure) {
-        this.measure = measure;
-    }
-
+    // Get ingredients
     public String getIngredient() {
-//        Log.e("Ingredient Class", "INGREDIENT " + ingredient);
         return ingredient;
-    }
-
-    public void setIngredient(String ingredient) {
-        this.ingredient = ingredient;
     }
 }

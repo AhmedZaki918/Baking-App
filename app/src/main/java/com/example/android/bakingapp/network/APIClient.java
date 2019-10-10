@@ -9,13 +9,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIClient {
 
-
     private static final String BASE_URL = Constant.BASE_URL;
     private static com.example.android.bakingapp.network.APIClient mInstance;
     private Retrofit retrofit;
 
     public APIClient() {
-
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();

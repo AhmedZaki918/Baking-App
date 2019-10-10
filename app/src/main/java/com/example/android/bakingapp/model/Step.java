@@ -2,17 +2,15 @@ package com.example.android.bakingapp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
-import com.example.android.bakingapp.adapter.StepsAdapter;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Step implements Parcelable {
 
-    private static final String LOG_TAG = Step.class.getSimpleName();
-
-
+    /**
+     * Initialize the variables
+     */
     @SerializedName("shortDescription")
     @Expose
     private String shortDescription;
@@ -54,28 +52,16 @@ public class Step implements Parcelable {
         }
     };
 
+    // Getters
     public String getShortDescription() {
-//        Log.e(LOG_TAG, "Short Description " + shortDescription);
         return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getVideoURL() {
         return videoURL;
-    }
-
-    public void setVideoURL(String videoURL) {
-        this.videoURL = videoURL;
     }
 }

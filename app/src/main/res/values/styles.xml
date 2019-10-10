@@ -8,4 +8,32 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- For text view labels -->
+    <style name="labels">
+
+        <item name="android:background">@color/headers</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!-- Recipe name-->
+    <style name="recipe" parent="labels">
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <!-- Landscape for mobile-->
+    <style name="landscape">
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@color/headers</item>
+        <item name="android:gravity">center</item>
+
+    </style>
+
+
 </resources>

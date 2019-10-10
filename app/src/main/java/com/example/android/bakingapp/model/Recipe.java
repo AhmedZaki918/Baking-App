@@ -7,11 +7,13 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-
 import java.util.List;
 
 public class Recipe implements Parcelable {
 
+    /**
+     * Initialize the variables
+     */
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -20,10 +22,10 @@ public class Recipe implements Parcelable {
     private String name;
     @SerializedName("ingredients")
     @Expose
-    private List<Ingredient> ingredients = null;
+    private List<Ingredient> ingredients;
     @SerializedName("steps")
     @Expose
-    private List<Step> steps = null;
+    private List<Step> steps;
 
 
     protected Recipe(Parcel in) {
@@ -67,10 +69,7 @@ public class Recipe implements Parcelable {
         }
     };
 
-    public void setSteps(List<Step> steps) {
-        this.steps = steps;
-    }
-
+    // Getter & Setter
     public List<Step> getSteps() {
         return steps;
     }
@@ -87,10 +86,6 @@ public class Recipe implements Parcelable {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -99,4 +94,3 @@ public class Recipe implements Parcelable {
         this.id = id;
     }
 }
-

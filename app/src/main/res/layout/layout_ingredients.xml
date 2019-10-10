@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
+    <!-- Quantity -->
     <TextView
         android:id="@+id/tv_quantity"
         android:layout_width="wrap_content"
@@ -22,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2" />
 
+    <!-- Measure -->
     <TextView
         android:id="@+id/tv_measure"
         android:layout_width="wrap_content"
@@ -37,6 +37,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="CUP" />
 
+    <!-- Ingredients -->
     <TextView
         android:id="@+id/tv_ingredient"
         android:layout_width="250dp"

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -25,35 +24,42 @@ import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class VideoActivity extends AppCompatActivity {
 
-
+    // Variables for steps data
     private Step mStep;
     private String mDescription;
     private String videoUrl;
-    private TextView videoDescription;
+    @BindView(R.id.tv_description)
+    TextView videoDescription;
 
+    // Views for Exoplayer
+    @BindView(R.id.exo_player_view)
     SimpleExoPlayerView exoPlayerView;
-    SimpleExoPlayer exoPlayer;
+    private SimpleExoPlayer exoPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
+        ButterKnife.bind(this);
 
+        // Get data from intent
         Intent intent = getIntent();
         mStep = intent.getParcelableExtra(Constant.STEPS);
 
-        videoDescription = findViewById(R.id.tv_description);
-        exoPlayerView = findViewById(R.id.exo_player_view);
-
+        //Displays description for the video
         mDescription = mStep.getDescription();
         videoDescription.setText(mDescription);
 
+        // Calling the method
         displayVideo();
-
     }
 
+    // Release mediaplayer
     @Override
     public void onStop() {
         super.onStop();
@@ -62,24 +68,30 @@ public class VideoActivity extends AppCompatActivity {
         }
     }
 
-    public void displayVideo() {
+    // Displays the video on the instructions screen
+    private void displayVideo() {
+        // Get video url
         videoUrl = mStep.getVideoURL();
 
+        // Don't run the video If the url is empty
         if (videoUrl.equals("")) {
             exoPlayerView.setVisibility(View.GONE);
 
         } else {
+            // Run the video if the url it's not empty
             try {
                 BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
                 TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
                 exoPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
 
+                // Parse the url of the video
                 Uri videoURI = Uri.parse(videoUrl);
-
+                // Setup for media source
                 DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory("exoplayer_video");
                 ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
                 MediaSource mediaSource = new ExtractorMediaSource(videoURI, dataSourceFactory, extractorsFactory, null, null);
 
+                // Prepare the Exoplayer
                 exoPlayerView.setPlayer(exoPlayer);
                 exoPlayer.prepare(mediaSource);
                 exoPlayer.setPlayWhenReady(true);
@@ -90,7 +102,8 @@ public class VideoActivity extends AppCompatActivity {
         }
     }
 
-    public void releaseMediaPlayer() {
+    // Release the media
+    private void releaseMediaPlayer() {
         exoPlayer.stop();
         exoPlayer.release();
     }

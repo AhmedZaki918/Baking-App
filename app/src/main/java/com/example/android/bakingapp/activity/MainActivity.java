@@ -1,9 +1,7 @@
 package com.example.android.bakingapp.activity;
 
-import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -30,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private List<Recipe> mRecipeList;
     private LinearLayoutManager mLayoutManager;
-    private GridLayoutManager mGridLayoutManager;
 
 
     @Override
@@ -42,13 +39,12 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recycler_view);
         mLayoutManager = new LinearLayoutManager(MainActivity.this);
 
-
+        // Calling the method
         getRecipeName();
-//        setOrientation();
-
     }
 
-    public void getRecipeName() {
+    // Display recipes names on the main screen
+    private void getRecipeName() {
 
         Call<List<Recipe>> call = APIClient.getInstance().getApi().get_recipe();
         call.enqueue(new Callback<List<Recipe>>() {
@@ -62,23 +58,10 @@ public class MainActivity extends AppCompatActivity {
                 mRecyclerView.setAdapter(mMainAdapter);
             }
 
-
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
-
-//    private void setOrientation() {
-//
-//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-//            mLayoutManager = new GridLayoutManager(this, 1);
-//            mRecyclerView.setLayoutManager(mLayoutManager);
-//
-//        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            mGridLayoutManager = new GridLayoutManager(this, 2);
-//            mRecyclerView.setLayoutManager(mGridLayoutManager);
-//        }
-//    }
 }

@@ -1,11 +1,9 @@
 package com.example.android.bakingapp.fragment;
 
 
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,52 +26,53 @@ import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DetailFragment extends Fragment {
 
+    // Variables for steps data
     private Step mStep;
     private String mDescription;
     private String videoUrl;
-    private TextView videoDescription;
+    private Bundle bundle;
+    @BindView(R.id.tv_description)
+    TextView videoDescription;
 
+    // Views for Exoplayer
+    @BindView(R.id.exo_player_view)
     SimpleExoPlayerView exoPlayerView;
     SimpleExoPlayer exoPlayer;
-
-    Bundle bundle;
-
 
     public DetailFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
-
-        videoDescription = view.findViewById(R.id.tv_description);
-        exoPlayerView = view.findViewById(R.id.exo_player_view);
-
+        ButterKnife.bind(this, view);
 
         bundle = this.getArguments();
         if (bundle != null) {
             mStep = bundle.getParcelable(Constant.STEPS);
 
+            // Display the description of the video
             mDescription = mStep.getDescription();
             videoDescription.setText(mDescription);
 
+            // Calling the method
             displayVideo();
         }
-
         return view;
     }
 
-
-
+    // Release mediaplayer media
     @Override
     public void onStop() {
         super.onStop();
@@ -82,24 +81,30 @@ public class DetailFragment extends Fragment {
         }
     }
 
+    // Displays the video on the instructions screen
     public void displayVideo() {
+        // Get video url
         videoUrl = mStep.getVideoURL();
 
+        // Don't run the video If the url is empty
         if (videoUrl.equals("")) {
             exoPlayerView.setVisibility(View.GONE);
 
         } else {
+            // Run the video if the url it's not empty
             try {
                 BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
                 TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
                 exoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
 
+                // Parse the url of the video
                 Uri videoURI = Uri.parse(videoUrl);
-
+                // Setup for media source
                 DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory("exoplayer_video");
                 ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
                 MediaSource mediaSource = new ExtractorMediaSource(videoURI, dataSourceFactory, extractorsFactory, null, null);
 
+                // Prepare the Exoplayer
                 exoPlayerView.setPlayer(exoPlayer);
                 exoPlayer.prepare(mediaSource);
                 exoPlayer.setPlayWhenReady(true);
@@ -110,9 +115,9 @@ public class DetailFragment extends Fragment {
         }
     }
 
-    public void releaseMediaPlayer() {
+    // Release the media
+    private void releaseMediaPlayer() {
         exoPlayer.stop();
         exoPlayer.release();
     }
-
 }

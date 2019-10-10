@@ -11,6 +11,4 @@ public interface APIInterface {
 
     @GET("baking.json")
     Call<List<Recipe>> get_recipe();
-
-
 }

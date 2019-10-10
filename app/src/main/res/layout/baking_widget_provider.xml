@@ -1,24 +1,27 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/widget"
+    android:orientation="vertical"
     android:padding="@dimen/widget_margin">
 
-    <ListView
-        android:id="@+id/list_view_widget"
+    <!-- Label of the widget-->
+    <TextView
+        android:id="@+id/appwidget_recipe_name"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center">
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:gravity="center"
+        android:text="@string/baking_app"
+        android:textSize="20sp"
+        android:textStyle="bold|italic" />
+
+    <ListView
+        android:id="@+id/widget_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     </ListView>
 
-
-    <TextView
-        android:id="@+id/empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="32dp"
-        android:gravity="center"
-        android:text="No data" />
-
-</RelativeLayout>
+</LinearLayout>
