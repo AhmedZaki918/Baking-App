@@ -2,10 +2,12 @@ package com.example.android.bakingapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
@@ -24,7 +26,7 @@ import java.util.List;
  */
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
-    Context context;
+    private Context context;
     private List<Recipe> mRecipeList;
 
     // Constructor for our MainAdapter
@@ -41,8 +43,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
      * @param viewType  Id for the list item layout
      * @return A new ViewHolder that holds the View for each list item
      */
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_main, null, false);
         return new ViewHolder(view);
     }
@@ -64,8 +67,27 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         // Set the given text on the view
         holder.recipeName.setText(currentItem.getName());
+        // Displays recipe image on the screen by it's id
+        switch (currentItem.getId()) {
+            case 1:
+                holder.recipePhoto.setImageResource(R.drawable.nut);
+                holder.recipeCaption.setText(R.string.nutella);
+                break;
+            case 2:
+                holder.recipePhoto.setImageResource(R.drawable.brown);
+                holder.recipeCaption.setText(R.string.brownies);
+                break;
+            case 3:
+                holder.recipePhoto.setImageResource(R.drawable.yellow);
+                holder.recipeCaption.setText(R.string.yellow_cake);
+                break;
+            default:
+                holder.recipePhoto.setImageResource(R.drawable.chess);
+                holder.recipeCaption.setText(R.string.cheescake);
+        }
+
         // Set on click listener on the view
-        holder.recipeName.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Setup the intent to go to the DetailsActivity
@@ -84,18 +106,20 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
      */
     @Override
     public int getItemCount() {
-        return mRecipeList.size();
+        return mRecipeList != null ? mRecipeList.size() : 0;
     }
 
     /**
      * Cache of the children views for a list item.
      */
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         /**
          * Initialize the view
          */
         private TextView recipeName;
+        private ImageView recipePhoto;
+        private TextView recipeCaption;
 
         /**
          * Constructor for our ViewHolder. Within this constructor, we get a reference to our
@@ -104,9 +128,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
          * @param itemView The View that you inflated in
          *                 {@link MainAdapter#onCreateViewHolder(ViewGroup, int)}
          */
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             recipeName = itemView.findViewById(R.id.tv_recipe_name);
+            recipePhoto = itemView.findViewById(R.id.iv_recipe);
+            recipeCaption = itemView.findViewById(R.id.tv_caption);
         }
     }
 }

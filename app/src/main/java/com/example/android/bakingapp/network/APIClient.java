@@ -13,7 +13,7 @@ public class APIClient {
     private static com.example.android.bakingapp.network.APIClient mInstance;
     private Retrofit retrofit;
 
-    public APIClient() {
+    private APIClient() {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();

@@ -6,13 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -42,7 +44,7 @@ import retrofit2.Response;
 public class DetailsActivity extends AppCompatActivity {
 
     // Main model class
-    private Recipe mRecipe;
+    public Recipe mRecipe;
 
     // Steps data
     private List<Step> mStepList;
@@ -57,14 +59,12 @@ public class DetailsActivity extends AppCompatActivity {
     RecyclerView mRecyclerIngredient;
 
     // Layout manager
+    @SuppressWarnings("FieldCanBeLocal")
     private LinearLayoutManager mLayoutManager;
 
-    // Recipe name TextView
+    // Recipe name
     @BindView(R.id.tv_recipe_name)
     TextView recipeName;
-
-    // String variable to store recipe name
-    private String name;
 
     // Recipe image
     @BindView(R.id.image)
@@ -80,8 +80,17 @@ public class DetailsActivity extends AppCompatActivity {
     TextView stepLabel;
     private int index = 0;
 
+    @BindView(R.id.tv_num_ingred)
+    TextView ingredientsNum;
+    @BindView(R.id.tv_num_steps)
+    TextView stepsNum;
+    @BindView(R.id.iv_back)
+    ImageView backBtn;
+
     // Tablet case (Two or One pane)
+    @SuppressWarnings("FieldCanBeLocal")
     private boolean isTwoPane;
+    ActionBar actionBar;
 
 
     @Override
@@ -90,29 +99,32 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
 
-        // Get data from Intent
+        // Hide action bar
+        actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.hide();
+
+        // Get the data via Intent
         Intent intent = getIntent();
         mRecipe = intent.getParcelableExtra(Constant.RECIPE);
 
-        // Check the device is tablet or not
-        if (findViewById(R.id.detailContainer) != null) {
-            isTwoPane = true;
-        } else {
-            isTwoPane = false;
-        }
-
+        /** --Tablet Case--
+         *  Check the device is Tablet or not
+         */
+        isTwoPane = findViewById(R.id.detailContainer) != null;
         // If it's tablet case, perform Two Pane Mode
         if (isTwoPane) {
             DetailFragment detailFragment = new DetailFragment();
-            replace(detailFragment, R.id.detailContainer, getSupportFragmentManager().beginTransaction());
+            replace(detailFragment, getSupportFragmentManager().beginTransaction());
 
-            // Change layout in landscape orientation
+            // Change the layout in landscape orientation
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
-                // Hide visibility, clear and SetText on views
+                // Hide visibility, clear and Set Text on views
                 ingredientsLabel.setVisibility(View.GONE);
                 mRecyclerIngredient.setVisibility(View.GONE);
                 stepLabel.setText("");
+                assert showHide != null;
                 showHide.setVisibility(View.VISIBLE);
                 showHide.setText(R.string.show_ingredients);
 
@@ -139,16 +151,15 @@ public class DetailsActivity extends AppCompatActivity {
             }
         }
 
-        // Get the name of the recipe
-        name = mRecipe.getName();
-        recipeName.setText(name);
+        // Display recipe name on view
+        recipeName.setText(mRecipe.getName());
 
-        // Set up adapter and recycler view for Ingredient data
+        // Setup Adapter and RecyclerView for ingredients data
         mIngredientList = new ArrayList<>();
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerIngredient.setLayoutManager(mLayoutManager);
 
-        // Set up adapter and recycler view for Steps data
+        // Setup Adapter and RecyclerView for steps data
         mStepList = new ArrayList<>();
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerStep.setLayoutManager(mLayoutManager);
@@ -157,66 +168,85 @@ public class DetailsActivity extends AppCompatActivity {
         getIngredientsAndSteps();
         displayRecipeImage();
 
+        // Set Click Listener on Back button
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DetailsActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
-    // Displays ingredients and Steps on the screen
+    /**
+     * Displays ingredients and steps on the screen
+     */
     private void getIngredientsAndSteps() {
         Call<List<Recipe>> call = APIClient.getInstance().getApi().get_recipe();
         call.enqueue(new Callback<List<Recipe>>() {
             @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+            public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
 
                 // For ingredients data
                 mIngredientList = mRecipe.getIngredients();
                 mIngredientsAdapter = new IngredientsAdapter(DetailsActivity.this, mIngredientList);
                 mRecyclerIngredient.setAdapter(mIngredientsAdapter);
+                ingredientsNum.setText(String.valueOf(mIngredientsAdapter.getItemCount()));
 
                 // For Steps data
                 mStepList = mRecipe.getSteps();
                 mStepAdapter = new StepsAdapter(DetailsActivity.this, mStepList);
                 mRecyclerStep.setAdapter(mStepAdapter);
+                stepsNum.setText(String.valueOf(mStepAdapter.getItemCount()));
 
                 // Run the widget
                 runWidget();
             }
 
             @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Recipe>> call, @NonNull Throwable t) {
                 Toast.makeText(DetailsActivity.this, R.string.error_data, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    // Displays recipe image on the screen by it's id
-    private void displayRecipeImage() {
+    /**
+     * Displays recipe image on the screen by it's id
+     */
+    public void displayRecipeImage() {
         switch (mRecipe.getId()) {
             case 1:
-                recipeImage.setImageResource(R.drawable.nutella_pie);
+                recipeImage.setImageResource(R.drawable.nut);
                 break;
             case 2:
-                recipeImage.setImageResource(R.drawable.brownies);
+                recipeImage.setImageResource(R.drawable.brown);
                 break;
             case 3:
-                recipeImage.setImageResource(R.drawable.yelleow_cake);
+                recipeImage.setImageResource(R.drawable.yellow);
                 break;
-            case 4:
-                recipeImage.setImageResource(R.drawable.cheese_cake);
-                break;
+            default:
+                recipeImage.setImageResource(R.drawable.chess);
         }
     }
 
-    // Helper method for fragment
-    private void replace(Fragment fragment, int id, FragmentTransaction fragmentTransaction) {
-        FragmentTransaction transaction = fragmentTransaction;
-        transaction.replace(id, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    /**
+     * Helper method for fragment
+     *
+     * @param fragment            is the fragment itself
+     * @param fragmentTransaction is the transaction of the fragment
+     */
+    private void replace(Fragment fragment, FragmentTransaction fragmentTransaction) {
+        fragmentTransaction.replace(R.id.detailContainer, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
-    // Run widget
+    /**
+     * Setup of the widget
+     */
     private void runWidget() {
         ArrayList<String> InPref = fillRow(mIngredientList);
-        setPreferences("ingredients", InPref, DetailsActivity.this);
+        setPreferences(InPref, DetailsActivity.this);
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(DetailsActivity.this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
@@ -225,17 +255,26 @@ public class DetailsActivity extends AppCompatActivity {
         BakingWidgetProvider.updateAppWidget(DetailsActivity.this, appWidgetManager, appWidgetIds);
     }
 
-    // Setup preferences for widget
-    private void setPreferences(String arrayName, ArrayList<String> array, Context mContext) {
+    /**
+     * Setup preferences for widget
+     *  @param array     array list of String
+     * @param mContext  the current context
+     */
+    private void setPreferences(ArrayList<String> array, Context mContext) {
         SharedPreferences prefs = mContext.getSharedPreferences("appWidget", 0);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(arrayName + "_size", array.size());
+        editor.putInt("ingredients" + "_size", array.size());
         for (int i = 0; i < array.size(); i++)
-            editor.putString(arrayName + "_" + i, array.get(i));
+            editor.putString("ingredients" + "_" + i, array.get(i));
         editor.apply();
     }
 
-    // Draw the layout of the row
+    /**
+     * Draw the layout of the row
+     *
+     * @param ingredientsList array list of Ingredient
+     * @return array list for each row
+     */
     private ArrayList<String> fillRow(List<Ingredient> ingredientsList) {
         ArrayList<String> arrayList = new ArrayList<>();
         for (int i = 0; i < ingredientsList.size(); i++) {

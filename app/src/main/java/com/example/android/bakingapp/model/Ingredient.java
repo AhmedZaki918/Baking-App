@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Ingredient implements Parcelable {
 
+
     /**
      * Initialize the variables
      */
@@ -23,12 +24,19 @@ public class Ingredient implements Parcelable {
     private String ingredient;
 
 
-    protected Ingredient(Parcel in) {
+    /**
+     * Constructor used for parcel
+     */
+    private Ingredient(Parcel in) {
         quantity = in.readString();
         measure = in.readString();
         ingredient = in.readString();
     }
 
+
+    /**
+     * Write object values to parcel for storage
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(quantity);
@@ -36,11 +44,19 @@ public class Ingredient implements Parcelable {
         dest.writeString(ingredient);
     }
 
+
+    /**
+     * Return hashcode of object
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+
+    /**
+     * Used when un-parceling our parcel (creating the object)
+     */
     public static final Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
         @Override
         public Ingredient createFromParcel(Parcel in) {
@@ -53,12 +69,16 @@ public class Ingredient implements Parcelable {
         }
     };
 
+
+    /**
+     * Getter
+     */
     // Get the Quantity
     public String getQuantity() {
         return quantity;
     }
 
-    // Get the measure
+    //  Get the measure
     public String getMeasure() {
         return measure;
     }

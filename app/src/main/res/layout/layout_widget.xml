@@ -9,5 +9,4 @@
     android:textStyle="italic"
     tools:text="recipe name">
 
-
 </TextView>

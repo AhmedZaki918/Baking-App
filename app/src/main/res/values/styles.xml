@@ -8,21 +8,30 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!-- For text view labels -->
-    <style name="labels">
-
-        <item name="android:background">@color/headers</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:textColor">@color/white</item>
+    <!-- Labels for RecyclerView -->
+    <style name="LabelRecyclerView">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">20sp</item>
     </style>
 
-    <!-- Recipe name-->
-    <style name="recipe" parent="labels">
-        <item name="android:textSize">25sp</item>
+    <!-- Mini Labels -->
+    <style name="MiniLabels">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
+
+    <!-- For numbers of steps and ingredients -->
+    <style name="NumbersStepsIngredients" parent="MiniLabels">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
     <!-- Landscape for mobile-->
     <style name="landscape">

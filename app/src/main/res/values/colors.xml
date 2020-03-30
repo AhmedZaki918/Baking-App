@@ -2,11 +2,11 @@
 <resources>
     <color name="colorPrimary">#7B1FA2</color>
     <color name="colorPrimaryDark">#7B1FA2</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#7B1FA2</color>
     <color name="headers">#AB47BC</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>
-    <color name="gray">#424242</color>
+    <color name="gray">#808080</color>
     <color name="widget">#BDBDBD</color>
 
 </resources>

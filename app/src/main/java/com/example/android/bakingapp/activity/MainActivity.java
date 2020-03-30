@@ -1,9 +1,12 @@
 package com.example.android.bakingapp.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.android.bakingapp.R;
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private List<Recipe> mRecipeList;
     private LinearLayoutManager mLayoutManager;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -35,8 +39,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Get the reference to the following views
         mRecipeList = new ArrayList<>();
         mRecyclerView = findViewById(R.id.recycler_view);
+        progressBar = findViewById(R.id.progress_bar);
         mLayoutManager = new LinearLayoutManager(MainActivity.this);
 
         // Calling the method
@@ -49,17 +55,18 @@ public class MainActivity extends AppCompatActivity {
         Call<List<Recipe>> call = APIClient.getInstance().getApi().get_recipe();
         call.enqueue(new Callback<List<Recipe>>() {
             @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+            public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
 
                 mRecipeList = response.body();
                 mMainAdapter = new MainAdapter(MainActivity.this, mRecipeList);
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.setHasFixedSize(true);
+                progressBar.setVisibility(View.GONE);
                 mRecyclerView.setAdapter(mMainAdapter);
             }
 
             @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Recipe>> call, @NonNull Throwable t) {
                 Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

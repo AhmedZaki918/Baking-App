@@ -13,27 +13,25 @@ import java.util.List;
 public class ListViewsService implements RemoteViewsService.RemoteViewsFactory {
 
 
-    Context context;
+    private Context context;
     private List<String> mIngredientsInPref;
 
-    public ListViewsService(Context context) {
+    ListViewsService(Context context) {
         this.context = context;
 
     }
 
     @Override
     public void onCreate() {
-
     }
 
     @Override
     public void onDataSetChanged() {
-        mIngredientsInPref = getPrefs("ingredients", context);
+        mIngredientsInPref = getPrefs(context);
     }
 
     @Override
     public void onDestroy() {
-
     }
 
     @Override
@@ -74,12 +72,18 @@ public class ListViewsService implements RemoteViewsService.RemoteViewsFactory {
     }
 
 
-    private ArrayList<String> getPrefs(String arrayName, Context mContext) {
+    /**
+     * Setup preferences for widget
+     *
+     * @param mContext the current context
+     * @return array list of String
+     */
+    private ArrayList<String> getPrefs(Context mContext) {
         SharedPreferences prefs = mContext.getSharedPreferences("appWidget", 0);
-        int size = prefs.getInt(arrayName + "_size", 0);
+        int size = prefs.getInt("ingredients" + "_size", 0);
         ArrayList<String> array = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
-            array.add(prefs.getString(arrayName + "_" + i, null));
+            array.add(prefs.getString("ingredients" + "_" + i, null));
         return array;
     }
 }

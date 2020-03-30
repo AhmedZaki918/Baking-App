@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,84 +7,171 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="4">
+        android:layout_weight="5">
 
 
-        <!-- Recipe name -->
-        <TextView
-            android:id="@+id/tv_recipe_name"
-            style="@style/recipe"
-            android:layout_height="50dp"
-            tools:text="CheeseCake" />
+        <!-- Back button -->
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/back_button"
+            android:elevation="8dp"
+            app:srcCompat="@drawable/baseline_arrow_back_white_48" />
+
 
         <!-- Recipe image -->
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_below="@+id/tv_recipe_name"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            app:srcCompat="@mipmap/ic_launcher" />
+            android:contentDescription="@string/recipe_image"
+            android:scaleType="fitXY"
+            tools:src="@drawable/brown" />
+
+
+        <!-- Recipe name -->
+        <TextView
+            android:id="@+id/tv_recipe_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/black"
+            android:textSize="23sp"
+            android:textStyle="bold"
+            tools:text="Brownies" />
+
+
+        <!-- hot recipes.dessert label -->
+        <TextView
+            android:id="@+id/tv_sub_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_recipe_name"
+            android:layout_marginStart="16dp"
+            android:text="@string/hot_recipes_dessert"
+            android:textColor="@color/black" />
+
+
+        <!-- Numbers of ingredients -->
+        <TextView
+            android:id="@+id/tv_num_ingred"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_sub_name"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            tools:text="12" />
+
+
+        <!-- Ingredients label -->
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_sub_name"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_toEndOf="@id/tv_num_ingred"
+            android:text="@string/ingredient"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+
+        <!-- Numbers of steps -->
+        <TextView
+            android:id="@+id/tv_num_steps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_num_ingred"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            tools:text="8" />
+
+
+        <!-- Steps label -->
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView5"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@id/tv_num_steps"
+            android:text="@string/steps"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
 
         <!-- Button to show or hide ingredients-->
         <Button
             android:id="@+id/btn_show_hide"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/image"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_below="@id/textView5"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
             android:background="@color/headers"
             android:text="@string/show_ingredients"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
-        <!-- Ingredients label -->
+
+        <!-- Ingredients label for RecyclerView -->
         <TextView
             android:id="@+id/tv_ingredient_label"
-            style="@style/labels"
-            android:layout_height="30dp"
-            android:layout_below="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView7"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/ingredients_label" />
+            android:layout_marginTop="24dp"
+            android:text="@string/ingredients_label"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
 
         <!-- RecyclerView for ingredients -->
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_ingredient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_ingredient_label"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp">
+            android:layout_marginEnd="8dp" />
 
-        </android.support.v7.widget.RecyclerView>
 
-        <!-- Steps label -->
+        <!-- Steps label for RecyclerView -->
         <TextView
             android:id="@+id/tv_step_label"
-            style="@style/labels"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/recycler_view_ingredient"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/steps_label" />
+            android:text="@string/steps_label"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
 
         <!-- RecyclerView for Steps -->
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_steps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,9 +179,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:paddingBottom="32dp">
-
-        </android.support.v7.widget.RecyclerView>
+            android:paddingBottom="32dp" />
 
 
     </RelativeLayout>

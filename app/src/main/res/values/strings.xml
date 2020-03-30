@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Baking</string>
+    <string name="app_name">DessertApp</string>
 
     <!-- Labels -->
-    <string name="ingredients_label">Ingredients</string>
-    <string name="steps_label">Steps</string>
+    <string name="ingredients_label">Ingredients:</string>
+    <string name="steps_label">Steps:</string>
     <string name="recipe_details">Recipe</string>
     <string name="description">Description</string>
     <string name="instructions">Instructions</string>
@@ -14,8 +14,23 @@
     <string name="appwidget_text">Baking App</string>
     <string name="add_widget">Add widget</string>
 
-    <!-- For fail to connect to the internet -->
+    <!-- For networking errors -->
     <string name="error_data">Error fetching data</string>
+
     <string name="baking_app">Baking App</string>
+    <string name="nutella">If you\'ve never tried Nutella, that ambrosial combination of hazelnuts and chocolate</string>
+    <string name="brownies">worlds best fudgiest brownies is my best brownie recipe! perfect crisp crackly top</string>
+    <string name="yellow_cake">A classic homemade Yellow Cake recipe with chocolate frosting and step-by-step photo</string>
+    <string name="cheescake">Cheesecake should never be a source of anything except pure bliss. Not distress.</string>
+    <string name="hot_recipes">Hot Recipes</string>
+    <string name="_4_recipes">4 recipes</string>
+    <string name="hot_recipes_dessert">hot recipes . dessert</string>
+    <string name="step">Step</string>
+    <string name="dash">-</string>
+    <string name="ingredient">ingredients</string>
+    <string name="steps">steps</string>
+    <string name="recipe_image">recipe image</string>
+    <string name="back_button">Back button</string>
+    <string name="ingredient_icon">ingredient icon</string>
 
 </resources>

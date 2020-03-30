@@ -3,10 +3,13 @@ package com.example.android.bakingapp.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
@@ -21,10 +24,12 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,16 +41,21 @@ public class DetailFragment extends Fragment {
 
     // Variables for steps data
     private Step mStep;
+    @SuppressWarnings("FieldCanBeLocal")
     private String mDescription;
+    @SuppressWarnings("FieldCanBeLocal")
     private String videoUrl;
+    @SuppressWarnings("FieldCanBeLocal")
     private Bundle bundle;
     @BindView(R.id.tv_description)
     TextView videoDescription;
+    @BindView(R.id.iv_alternative)
+    ImageView ivVideo;
 
     // Views for Exoplayer
     @BindView(R.id.exo_player_view)
-    SimpleExoPlayerView exoPlayerView;
-    SimpleExoPlayer exoPlayer;
+    PlayerView playerView;
+    private SimpleExoPlayer exoPlayer;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -58,11 +68,13 @@ public class DetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
         ButterKnife.bind(this, view);
 
+        // Retrieve the steps via Bundle
         bundle = this.getArguments();
         if (bundle != null) {
             mStep = bundle.getParcelable(Constant.STEPS);
 
             // Display the description of the video
+            assert mStep != null;
             mDescription = mStep.getDescription();
             videoDescription.setText(mDescription);
 
@@ -72,7 +84,9 @@ public class DetailFragment extends Fragment {
         return view;
     }
 
-    // Release mediaplayer media
+    /**
+     * Release mediaplayer media
+     */
     @Override
     public void onStop() {
         super.onStop();
@@ -81,14 +95,25 @@ public class DetailFragment extends Fragment {
         }
     }
 
-    // Displays the video on the instructions screen
-    public void displayVideo() {
+    /**
+     * Displays the video on the instructions screen
+     */
+    private void displayVideo() {
         // Get video url
         videoUrl = mStep.getVideoURL();
 
         // Don't run the video If the url is empty
         if (videoUrl.equals("")) {
-            exoPlayerView.setVisibility(View.GONE);
+            playerView.setVisibility(View.GONE);
+            ivVideo.setVisibility(View.VISIBLE);
+
+            // an array of images to display random icons for each step instead of "No Video Case"
+            int[] recipesIcons = {R.drawable.nutella_icon,
+                    R.drawable.cheesecake_icon,
+                    R.drawable.brownies_icon,
+                    R.drawable.yellowcake_icon};
+            // Displays the image on view
+            ivVideo.setImageResource(recipesIcons[new Random().nextInt(recipesIcons.length)]);
 
         } else {
             // Run the video if the url it's not empty
@@ -102,10 +127,14 @@ public class DetailFragment extends Fragment {
                 // Setup for media source
                 DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory("exoplayer_video");
                 ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
-                MediaSource mediaSource = new ExtractorMediaSource(videoURI, dataSourceFactory, extractorsFactory, null, null);
+                MediaSource mediaSource = new ExtractorMediaSource(videoURI,
+                        dataSourceFactory,
+                        extractorsFactory,
+                        null,
+                        null);
 
                 // Prepare the Exoplayer
-                exoPlayerView.setPlayer(exoPlayer);
+                playerView.setPlayer(exoPlayer);
                 exoPlayer.prepare(mediaSource);
                 exoPlayer.setPlayWhenReady(true);
 
@@ -115,7 +144,9 @@ public class DetailFragment extends Fragment {
         }
     }
 
-    // Release the media
+    /**
+     * Release the media
+     */
     private void releaseMediaPlayer() {
         exoPlayer.stop();
         exoPlayer.release();

@@ -4,9 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ import java.util.List;
  */
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> {
 
-    Context context;
+    private Context context;
     private List<Step> mStepList;
 
     // Constructor for our StepsAdapter
@@ -46,9 +47,14 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
      * @param viewType  Id for the list item layout
      * @return A new ViewHolder that holds the View for each list item
      */
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+
         View view = LayoutInflater.from(context).inflate(R.layout.layout_steps, null, false);
+        // To adjust the size of CardView
+        view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
+                RecyclerView.LayoutParams.WRAP_CONTENT));
         return new ViewHolder(view);
     }
 
@@ -64,11 +70,21 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         // Get the position of the current list item
         final Step currentItem = mStepList.get(position);
-
-        // Set the given text on the view
+        // Set the given text on view
         holder.shortDescription.setText(currentItem.getShortDescription());
+
+        // Add 0 before the numbers from ( 0 : 9 ) only
+        int convertedId = Integer.parseInt(currentItem.getId());
+        // Set the number of step on view
+        if (convertedId >= 10) {
+            holder.stepsNum.setText(currentItem.getId());
+        } else {
+            holder.stepsNum.setText(String.format("0%s", currentItem.getId()));
+        }
+
         // Set on click listener on the view
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +97,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
                     Bundle bundle = new Bundle();
                     bundle.putParcelable(Constant.STEPS, currentItem);
                     detailFragment.setArguments(bundle);
-                    replace(detailFragment, R.id.detailContainer, detailsActivity.getSupportFragmentManager().beginTransaction());
+                    replace(detailFragment, detailsActivity.getSupportFragmentManager().beginTransaction());
 
                     // Mobile case
                 } else {
@@ -107,12 +123,13 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
     /**
      * Cache of the children views for a list item.
      */
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         /**
          * Initialize the view
          */
         private TextView shortDescription;
+        private TextView stepsNum;
 
         /**
          * Constructor for our ViewHolder. Within this constructor, we get a reference to our
@@ -121,21 +138,31 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
          * @param itemView The View that you inflated in
          *                 {@link StepsAdapter#onCreateViewHolder(ViewGroup, int)}
          */
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             shortDescription = itemView.findViewById(R.id.tv_short_description);
+            stepsNum = itemView.findViewById(R.id.tv_num_steps);
         }
     }
 
-    // Helper method for fragment
-    private void replace(Fragment fragment, int id, FragmentTransaction fragmentTransaction) {
-        FragmentTransaction transaction = fragmentTransaction;
-        transaction.replace(id, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    /**
+     * Helper method for fragment
+     *
+     * @param fragment            is the fragment itself
+     * @param fragmentTransaction is the transaction of the fragment
+     */
+    private void replace(Fragment fragment, FragmentTransaction fragmentTransaction) {
+        fragmentTransaction.replace(R.id.detailContainer, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
-    // If the device is tablet
+    /**
+     * If the device is tablet
+     *
+     * @param context the current context of the app
+     * @return if the device is tablet or mobile
+     */
     private boolean isTablet(Context context) {
         boolean xlarge = ((context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == 4);
         boolean large = ((context.getResources().getConfiguration()

@@ -1,16 +1,19 @@
 package com.example.android.bakingapp.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.model.Ingredient;
 
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -22,7 +25,7 @@ import java.util.List;
  */
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.ViewHolder> {
 
-    Context context;
+    private Context context;
     private List<Ingredient> mIngredientList;
 
     // Constructor for our IngredientsAdapter
@@ -39,9 +42,14 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
      * @param viewType  Id for the list item layout
      * @return A new ViewHolder that holds the View for each list item
      */
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+
         View view = LayoutInflater.from(context).inflate(R.layout.layout_ingredients, null, false);
+        // To adjust the size of CardView
+        view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
+                RecyclerView.LayoutParams.WRAP_CONTENT));
         return new ViewHolder(view);
     }
 
@@ -64,6 +72,15 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         holder.mIngredient.setText(currentItem.getIngredient());
         holder.mMeasure.setText(currentItem.getMeasure());
         holder.mQuantity.setText(currentItem.getQuantity());
+
+        // an array of images to display random icons for each row in the list
+        int[] ingredientsIcons = {R.drawable.eggs,
+                R.drawable.ingred,
+                R.drawable.pot,
+                R.drawable.herbs,
+                R.drawable.ingred_icon};
+        // Set the image on the view
+        holder.mIcon.setImageResource(ingredientsIcons[new Random().nextInt(ingredientsIcons.length)]);
     }
 
     /**
@@ -74,13 +91,13 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
      */
     @Override
     public int getItemCount() {
-        return mIngredientList.size();
+        return mIngredientList != null ? mIngredientList.size() : 0;
     }
 
     /**
      * Cache of the children views for a list item.
      */
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         /**
          * Initialize the views
@@ -88,6 +105,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         private TextView mQuantity;
         private TextView mMeasure;
         private TextView mIngredient;
+        private ImageView mIcon;
 
         /**
          * Constructor for our ViewHolder. Within this constructor, we get a reference to our
@@ -96,11 +114,12 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
          * @param itemView The View that you inflated in
          *                 {@link IngredientsAdapter#onCreateViewHolder(ViewGroup, int)}
          */
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             mQuantity = itemView.findViewById(R.id.tv_quantity);
             mMeasure = itemView.findViewById(R.id.tv_measure);
             mIngredient = itemView.findViewById(R.id.tv_ingredient);
+            mIcon = itemView.findViewById(R.id.iv_icon);
         }
     }
 }
