@@ -10,7 +10,7 @@
 
 
 ## General info
-This app displays the dessert recipes from the internet included ingredients, steps and videos for each step you choose.
+This android app displays the dessert recipes from the internet included ingredients, steps and videos for each step you choose.
 
 ## Screenshots
 
