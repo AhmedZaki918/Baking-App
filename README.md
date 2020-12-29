@@ -4,6 +4,7 @@
 * [General info](#general-info)
 * [Screenshots](#screenshots)
 * [Technologies](#technologies)
+* [Features](#features) 
 * [Setup](#setup)
 * [YouTube Link](#youtube-link)
 * [License](#license)
