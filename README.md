@@ -36,6 +36,11 @@ This android app displays the dessert recipes from the internet included ingredi
 - Material design 1.2.1 (https://developer.android.com/guide/topics/ui/look-and-feel)
 - Espresso 3.3.0 (https://developer.android.com/training/testing/espresso)
 
+## Features
+- Layout for tablet
+- Videos for each recipe.
+
+
 ## Setup
 
 To run this project, install it by download or clone.
