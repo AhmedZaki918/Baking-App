@@ -152,7 +152,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
      * @param fragmentTransaction is the transaction of the fragment
      */
     private void replace(Fragment fragment, FragmentTransaction fragmentTransaction) {
-        fragmentTransaction.replace(R.id.detailContainer, fragment);
+//        fragmentTransaction.replace(R.id.detailContainer, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

@@ -74,8 +74,8 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.tv_ingredient_label)
     TextView ingredientsLabel;
     @Nullable
-    @BindView(R.id.btn_show_hide)
-    Button showHide;
+//    @BindView(R.id.btn_show_hide)
+//    Button showHide;
     @BindView(R.id.tv_step_label)
     TextView stepLabel;
     private int index = 0;
@@ -111,7 +111,7 @@ public class DetailsActivity extends AppCompatActivity {
         /** --Tablet Case--
          *  Check the device is Tablet or not
          */
-        isTwoPane = findViewById(R.id.detailContainer) != null;
+//        isTwoPane = findViewById(R.id.detailContainer) != null;
         // If it's tablet case, perform Two Pane Mode
         if (isTwoPane) {
             DetailFragment detailFragment = new DetailFragment();
@@ -124,30 +124,30 @@ public class DetailsActivity extends AppCompatActivity {
                 ingredientsLabel.setVisibility(View.GONE);
                 mRecyclerIngredient.setVisibility(View.GONE);
                 stepLabel.setText("");
-                assert showHide != null;
-                showHide.setVisibility(View.VISIBLE);
-                showHide.setText(R.string.show_ingredients);
+//                assert showHide != null;
+//                showHide.setVisibility(View.VISIBLE);
+//                showHide.setText(R.string.show_ingredients);
 
                 // Set on click listener to hide and show the views
-                showHide.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if (index == 0) {
-                            showHide.setText(R.string.hide_ingredients);
-                            ingredientsLabel.setVisibility(View.VISIBLE);
-                            ingredientsLabel.setText("");
-                            mRecyclerIngredient.setVisibility(View.VISIBLE);
-
-                            index++;
-                        } else {
-                            showHide.setText(R.string.show_ingredients);
-                            ingredientsLabel.setVisibility(View.GONE);
-                            mRecyclerIngredient.setVisibility(View.GONE);
-                            index = 0;
-                        }
-                    }
-                });
+//                showHide.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        if (index == 0) {
+//                            showHide.setText(R.string.hide_ingredients);
+//                            ingredientsLabel.setVisibility(View.VISIBLE);
+//                            ingredientsLabel.setText("");
+//                            mRecyclerIngredient.setVisibility(View.VISIBLE);
+//
+//                            index++;
+//                        } else {
+//                            showHide.setText(R.string.show_ingredients);
+//                            ingredientsLabel.setVisibility(View.GONE);
+//                            mRecyclerIngredient.setVisibility(View.GONE);
+//                            index = 0;
+//                        }
+//                    }
+//                });
             }
         }
 
@@ -236,7 +236,7 @@ public class DetailsActivity extends AppCompatActivity {
      * @param fragmentTransaction is the transaction of the fragment
      */
     private void replace(Fragment fragment, FragmentTransaction fragmentTransaction) {
-        fragmentTransaction.replace(R.id.detailContainer, fragment);
+//        fragmentTransaction.replace(R.id.detailContainer, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
