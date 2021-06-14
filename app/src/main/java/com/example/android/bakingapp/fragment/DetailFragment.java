@@ -11,8 +11,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.adapter.Constant;
-import com.example.android.bakingapp.model.Step;
+import com.example.android.bakingapp.ui.adapter.Constant;
+import com.example.android.bakingapp.data.model.Step;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
 

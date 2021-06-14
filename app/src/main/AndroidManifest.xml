@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".ui.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/donut"
         android:label="@string/app_name"
@@ -24,9 +25,9 @@
             android:label="@string/recipe_details">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.bakingapp.activity.MainActivity" />
+                android:value="com.example.android.bakingapp.ui.home.HomeActivity" />
         </activity>
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

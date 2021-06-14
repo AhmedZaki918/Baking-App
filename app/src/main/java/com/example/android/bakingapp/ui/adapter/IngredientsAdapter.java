@@ -1,4 +1,4 @@
-package com.example.android.bakingapp.adapter;
+package com.example.android.bakingapp.ui.adapter;
 
 import android.content.Context;
 import androidx.annotation.NonNull;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.model.Ingredient;
+import com.example.android.bakingapp.data.model.Ingredient;
 
 import java.util.List;
 import java.util.Random;

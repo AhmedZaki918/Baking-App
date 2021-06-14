@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.activity.MainActivity;
+import com.example.android.bakingapp.ui.home.HomeActivity;
 
 
 /**
@@ -21,7 +21,7 @@ public class BakingWidgetProvider extends AppWidgetProvider {
 
         for (int appWidgetId : appWidgetIds) {
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-                    new Intent(context, MainActivity.class), 0);
+                    new Intent(context, HomeActivity.class), 0);
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_widget_provider);
             views.setRemoteAdapter(R.id.widget_list,
                     BakingWidgetService.getIntent(context));

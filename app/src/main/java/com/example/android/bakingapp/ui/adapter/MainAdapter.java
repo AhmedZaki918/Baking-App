@@ -1,4 +1,4 @@
-package com.example.android.bakingapp.adapter;
+package com.example.android.bakingapp.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.activity.DetailsActivity;
-import com.example.android.bakingapp.model.Recipe;
+import com.example.android.bakingapp.data.model.Recipe;
 
 import java.util.List;
 

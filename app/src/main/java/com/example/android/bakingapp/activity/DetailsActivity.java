@@ -6,30 +6,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import androidx.annotation.NonNull;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.adapter.Constant;
-import com.example.android.bakingapp.adapter.IngredientsAdapter;
-import com.example.android.bakingapp.adapter.StepsAdapter;
+import com.example.android.bakingapp.ui.adapter.Constant;
+import com.example.android.bakingapp.ui.adapter.IngredientsAdapter;
+import com.example.android.bakingapp.ui.adapter.StepsAdapter;
 import com.example.android.bakingapp.fragment.DetailFragment;
-import com.example.android.bakingapp.model.Ingredient;
-import com.example.android.bakingapp.model.Recipe;
-import com.example.android.bakingapp.model.Step;
-import com.example.android.bakingapp.network.APIClient;
+import com.example.android.bakingapp.data.model.Ingredient;
+import com.example.android.bakingapp.data.model.Recipe;
+import com.example.android.bakingapp.data.model.Step;
+import com.example.android.bakingapp.ui.home.HomeActivity;
 import com.example.android.bakingapp.widget.BakingWidgetProvider;
 
 import java.util.ArrayList;
@@ -37,9 +38,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -124,30 +122,6 @@ public class DetailsActivity extends AppCompatActivity {
                 ingredientsLabel.setVisibility(View.GONE);
                 mRecyclerIngredient.setVisibility(View.GONE);
                 stepLabel.setText("");
-//                assert showHide != null;
-//                showHide.setVisibility(View.VISIBLE);
-//                showHide.setText(R.string.show_ingredients);
-
-                // Set on click listener to hide and show the views
-//                showHide.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                        if (index == 0) {
-//                            showHide.setText(R.string.hide_ingredients);
-//                            ingredientsLabel.setVisibility(View.VISIBLE);
-//                            ingredientsLabel.setText("");
-//                            mRecyclerIngredient.setVisibility(View.VISIBLE);
-//
-//                            index++;
-//                        } else {
-//                            showHide.setText(R.string.show_ingredients);
-//                            ingredientsLabel.setVisibility(View.GONE);
-//                            mRecyclerIngredient.setVisibility(View.GONE);
-//                            index = 0;
-//                        }
-//                    }
-//                });
             }
         }
 
@@ -165,14 +139,14 @@ public class DetailsActivity extends AppCompatActivity {
         mRecyclerStep.setLayoutManager(mLayoutManager);
 
         // Calling the methods
-        getIngredientsAndSteps();
+//        getIngredientsAndSteps();
         displayRecipeImage();
 
         // Set Click Listener on Back button
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(DetailsActivity.this, MainActivity.class);
+                Intent i = new Intent(DetailsActivity.this, HomeActivity.class);
                 startActivity(i);
             }
         });
@@ -181,34 +155,34 @@ public class DetailsActivity extends AppCompatActivity {
     /**
      * Displays ingredients and steps on the screen
      */
-    private void getIngredientsAndSteps() {
-        Call<List<Recipe>> call = APIClient.getInstance().getApi().get_recipe();
-        call.enqueue(new Callback<List<Recipe>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
-
-                // For ingredients data
-                mIngredientList = mRecipe.getIngredients();
-                mIngredientsAdapter = new IngredientsAdapter(DetailsActivity.this, mIngredientList);
-                mRecyclerIngredient.setAdapter(mIngredientsAdapter);
-                ingredientsNum.setText(String.valueOf(mIngredientsAdapter.getItemCount()));
-
-                // For Steps data
-                mStepList = mRecipe.getSteps();
-                mStepAdapter = new StepsAdapter(DetailsActivity.this, mStepList);
-                mRecyclerStep.setAdapter(mStepAdapter);
-                stepsNum.setText(String.valueOf(mStepAdapter.getItemCount()));
-
-                // Run the widget
-                runWidget();
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<List<Recipe>> call, @NonNull Throwable t) {
-                Toast.makeText(DetailsActivity.this, R.string.error_data, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void getIngredientsAndSteps() {
+//        Call<List<Recipe>> call = APIClient.getInstance().getApi().get_recipe();
+//        call.enqueue(new Callback<List<Recipe>>() {
+//            @Override
+//            public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
+//
+//                // For ingredients data
+//                mIngredientList = mRecipe.getIngredients();
+//                mIngredientsAdapter = new IngredientsAdapter(DetailsActivity.this, mIngredientList);
+//                mRecyclerIngredient.setAdapter(mIngredientsAdapter);
+//                ingredientsNum.setText(String.valueOf(mIngredientsAdapter.getItemCount()));
+//
+//                // For Steps data
+//                mStepList = mRecipe.getSteps();
+//                mStepAdapter = new StepsAdapter(DetailsActivity.this, mStepList);
+//                mRecyclerStep.setAdapter(mStepAdapter);
+//                stepsNum.setText(String.valueOf(mStepAdapter.getItemCount()));
+//
+//                // Run the widget
+//                runWidget();
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<List<Recipe>> call, @NonNull Throwable t) {
+//                Toast.makeText(DetailsActivity.this, R.string.error_data, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     /**
      * Displays recipe image on the screen by it's id
@@ -257,8 +231,9 @@ public class DetailsActivity extends AppCompatActivity {
 
     /**
      * Setup preferences for widget
-     *  @param array     array list of String
-     * @param mContext  the current context
+     *
+     * @param array    array list of String
+     * @param mContext the current context
      */
     private void setPreferences(ArrayList<String> array, Context mContext) {
         SharedPreferences prefs = mContext.getSharedPreferences("appWidget", 0);

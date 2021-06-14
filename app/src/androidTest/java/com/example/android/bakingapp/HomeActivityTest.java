@@ -10,7 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
-import com.example.android.bakingapp.activity.MainActivity;
+import com.example.android.bakingapp.ui.home.HomeActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -27,7 +27,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class MainActivityTest {
+public class HomeActivityTest {
 
 
     // Recipe name at position 1 in recyclerview
@@ -35,8 +35,8 @@ public class MainActivityTest {
 
 
     @Rule
-    public ActivityTestRule<MainActivity> mainActivity =
-            new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<HomeActivity> mainActivity =
+            new ActivityTestRule<>(HomeActivity.class);
 
 
     public static Matcher<View> atPosition(final int position, @NonNull final Matcher<View> itemMatcher) {
