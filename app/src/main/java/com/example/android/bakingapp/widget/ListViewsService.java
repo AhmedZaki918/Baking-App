@@ -13,7 +13,7 @@ import java.util.List;
 public class ListViewsService implements RemoteViewsService.RemoteViewsFactory {
 
 
-    private Context context;
+    private final Context context;
     private List<String> mIngredientsInPref;
 
     ListViewsService(Context context) {

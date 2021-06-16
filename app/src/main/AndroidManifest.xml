@@ -18,10 +18,10 @@
 
 
         <activity
-            android:name=".activity.VideoActivity"
+            android:name=".ui.video.VideoActivity"
             android:label="@string/instructions" />
         <activity
-            android:name=".activity.DetailsActivity"
+            android:name=".ui.details.DetailsActivity"
             android:label="@string/recipe_details">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

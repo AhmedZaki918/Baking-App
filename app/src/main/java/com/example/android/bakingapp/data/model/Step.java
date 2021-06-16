@@ -9,26 +9,22 @@ import com.google.gson.annotations.SerializedName;
 public class Step implements Parcelable {
 
 
-    /**
-     * Initialize the variables
-     */
+    // Initialization
     @SerializedName("shortDescription")
     @Expose
-    private String shortDescription;
+    private final String shortDescription;
     @SerializedName("description")
     @Expose
-    private String description;
+    private final String description;
     @SerializedName("videoURL")
     @Expose
-    private String videoURL;
+    private final String videoURL;
     @SerializedName("id")
     @Expose
-    private String id;
+    private final String id;
 
 
-    /**
-     * Constructor used for parcel
-     */
+    // Constructor used for parcel
     private Step(Parcel in) {
         shortDescription = in.readString();
         description = in.readString();
@@ -37,9 +33,7 @@ public class Step implements Parcelable {
     }
 
 
-    /**
-     * Used when un-parceling our parcel (creating the object)
-     */
+    // Used when un-parceling our parcel (creating the object)
     public static final Creator<Step> CREATOR = new Creator<Step>() {
         @Override
         public Step createFromParcel(Parcel in) {
@@ -53,18 +47,14 @@ public class Step implements Parcelable {
     };
 
 
-    /**
-     * Return hashcode of object
-     */
+    // Return hashcode of object
     @Override
     public int describeContents() {
         return 0;
     }
 
 
-    /**
-     * Write object values to parcel for storage
-     */
+    // Write object values to parcel for storage
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(shortDescription);
@@ -74,25 +64,19 @@ public class Step implements Parcelable {
     }
 
 
-    /**
-     * Getters
-     */
-    // Get short description for the step
+    // Getters
     public String getShortDescription() {
         return shortDescription;
     }
 
-    // Get description for the step
     public String getDescription() {
         return description;
     }
 
-    // Get video url for the step
     public String getVideoURL() {
         return videoURL;
     }
 
-    // Get the id
     public String getId() {
         return id;
     }

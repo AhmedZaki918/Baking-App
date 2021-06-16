@@ -4,19 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.activity.DetailsActivity;
-import com.example.android.bakingapp.activity.VideoActivity;
-import com.example.android.bakingapp.fragment.DetailFragment;
+import com.example.android.bakingapp.ui.details.DetailsActivity;
+import com.example.android.bakingapp.ui.video.VideoActivity;
 import com.example.android.bakingapp.data.model.Step;
 
 import java.util.List;
@@ -89,22 +90,9 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.ViewHolder> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // Tablet case
-                if (isTablet(context)) {
-                    DetailsActivity detailsActivity = (DetailsActivity) context;
-                    DetailFragment detailFragment = new DetailFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable(Constant.STEPS, currentItem);
-                    detailFragment.setArguments(bundle);
-                    replace(detailFragment, detailsActivity.getSupportFragmentManager().beginTransaction());
-
-                    // Mobile case
-                } else {
-                    Intent intent = new Intent(context, VideoActivity.class);
-                    intent.putExtra(Constant.STEPS, currentItem);
-                    context.startActivity(intent);
-                }
+                Intent intent = new Intent(context, VideoActivity.class);
+                intent.putExtra(Constant.STEPS, currentItem);
+                context.startActivity(intent);
             }
         });
     }

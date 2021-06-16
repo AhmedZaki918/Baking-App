@@ -13,9 +13,7 @@ import java.util.List;
 public class Recipe implements Parcelable {
 
 
-    /**
-     * Initialize the variables
-     */
+    // Initialization
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -24,15 +22,13 @@ public class Recipe implements Parcelable {
     private String name;
     @SerializedName("ingredients")
     @Expose
-    private List<Ingredient> ingredients;
+    private final List<Ingredient> ingredients;
     @SerializedName("steps")
     @Expose
-    private List<Step> steps;
+    private final List<Step> steps;
 
 
-    /**
-     * Constructor used for parcel
-     */
+    // Constructor used for parcel
     protected Recipe(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
@@ -45,9 +41,7 @@ public class Recipe implements Parcelable {
     }
 
 
-    /**
-     * Write object values to parcel for storage
-     */
+    // Write object values to parcel for storage
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         if (id == null) {
@@ -62,18 +56,14 @@ public class Recipe implements Parcelable {
     }
 
 
-    /**
-     * Return hashcode of object
-     */
+    // Return hashcode of object
     @Override
     public int describeContents() {
         return 0;
     }
 
 
-    /**
-     * Used when un-parceling our parcel (creating the object)
-     */
+    // Used when un-parceling our parcel (creating the object)
     public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
         @Override
         public Recipe createFromParcel(Parcel in) {
@@ -87,35 +77,27 @@ public class Recipe implements Parcelable {
     };
 
 
-    /**
-     * Getter & Setter
-     */
-    // Get the steps
+    //  Getter & Setter
     public List<Step> getSteps() {
         return steps;
     }
 
-    // Get the recipe name
     public String getName() {
         return name;
     }
 
-    // Set the recipe name
     public void setName(String name) {
         this.name = name;
     }
 
-    // Get the ingredients of the recipe
     public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    // Get the Id of the recipe
     public Integer getId() {
         return id;
     }
 
-    // Set the Id of the recipe
     public void setId(Integer id) {
         this.id = id;
     }
