@@ -4,7 +4,6 @@
 * [General info](#general-info)
 * [Screenshots](#screenshots)
 * [Technologies](#technologies)
-* [Features](#features) 
 * [Setup](#setup)
 * [YouTube Link](#youtube-link)
 * [License](#license)
@@ -27,19 +26,19 @@ This android app displays the dessert recipes from the internet included ingredi
 - Java 
 - xml
 
+#### Architecture patterns:
+- MVVM
+
 #### Libraries:
 - Retrofit 2.9.0 (https://square.github.io/retrofit/)
-- Gson 2.8.5 (https://github.com/google/gson)
-- RecyclerView 1.1.0 (https://developer.android.com/jetpack/androidx/releases/recyclerview)
+- Gson 2.8.6 (https://github.com/google/gson)
+- RecyclerView 1.2.1 (https://developer.android.com/jetpack/androidx/releases/recyclerview)
 - CardView 1.0.0 (https://developer.android.com/jetpack/androidx/releases/cardview)
-- ButterKnife 10.2.1 (https://github.com/JakeWharton/butterknife)
-- ExoPlayer 2.7.3 (https://developer.android.com/guide/topics/media/exoplayer)
-- Material design 1.2.1 (https://developer.android.com/guide/topics/ui/look-and-feel)
+- RxJava 3.0.0 (https://github.com/ReactiveX/RxJava)
+- ExoPlayer 2.14.1 (https://developer.android.com/guide/topics/media/exoplayer)
+- Hilt 2.32-alpha (https://developer.android.com/training/dependency-injection/hilt-android)
+- Material design 1.3.0 (https://developer.android.com/guide/topics/ui/look-and-feel)
 - Espresso 3.3.0 (https://developer.android.com/training/testing/espresso)
-
-## Features
-- Layout for tablet
-- Videos for each recipe.
 
 
 ## Setup
@@ -47,10 +46,10 @@ This android app displays the dessert recipes from the internet included ingredi
 To run this project, install it by download or clone.
 
 #### System requirements
-- Android studio v4.1.1
+- Android studio v4.2.1
 - Minimum sdk v21
-- Build tool v29.0.3
-- Compile sdk v29
+- Build tool v30.0.3
+- Compile sdk v30
 
 
 ## YouTube link 
