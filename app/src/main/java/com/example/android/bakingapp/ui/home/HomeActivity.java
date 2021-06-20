@@ -24,7 +24,6 @@ import static android.view.View.GONE;
 @AndroidEntryPoint
 public class HomeActivity extends AppCompatActivity implements OnAdapterClick {
 
-
     private ActivityMainBinding binding;
     HomeViewModel viewModel;
 
@@ -41,18 +40,18 @@ public class HomeActivity extends AppCompatActivity implements OnAdapterClick {
     }
 
 
-    private void updateUi(List<Recipe> data) {
-        ViewUtils.setupRecyclerView(binding.recyclerView,
-                new LinearLayoutManager(this),
-                new MainAdapter(data, this));
-        binding.progressBar.setVisibility(GONE);
-    }
-
-
     @Override
     public void onItemClick(Recipe recipe) {
         Intent intent = new Intent(this, DetailsActivity.class);
         intent.putExtra(Constant.RECIPE, recipe);
         this.startActivity(intent);
+    }
+
+
+    private void updateUi(List<Recipe> data) {
+        ViewUtils.setupRecyclerView(binding.recyclerView,
+                new LinearLayoutManager(this),
+                new MainAdapter(data, this));
+        binding.progressBar.setVisibility(GONE);
     }
 }

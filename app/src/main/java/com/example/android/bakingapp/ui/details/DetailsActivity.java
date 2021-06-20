@@ -1,5 +1,6 @@
 package com.example.android.bakingapp.ui.details;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -8,10 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.data.model.Recipe;
+import com.example.android.bakingapp.data.model.Step;
 import com.example.android.bakingapp.databinding.ActivityDetailsBinding;
 import com.example.android.bakingapp.ui.adapter.Constant;
 import com.example.android.bakingapp.ui.adapter.IngredientsAdapter;
 import com.example.android.bakingapp.ui.adapter.StepsAdapter;
+import com.example.android.bakingapp.ui.video.VideoActivity;
+import com.example.android.bakingapp.util.OnStepClick;
 import com.example.android.bakingapp.util.ViewUtils;
 
 import java.util.Objects;
@@ -19,7 +23,8 @@ import java.util.Objects;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class DetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class DetailsActivity extends AppCompatActivity implements View.OnClickListener,
+        OnStepClick {
 
 
     private Recipe recipes;
@@ -44,18 +49,23 @@ public class DetailsActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.iv_back) {
-            onBackPressed();
-        }
+        if (v.getId() == R.id.iv_back) onBackPressed();
+    }
+
+
+    @Override
+    public void onItemClick(Step currentItem) {
+        Intent intent = new Intent(DetailsActivity.this, VideoActivity.class);
+        intent.putExtra(Constant.STEPS, currentItem);
+        this.startActivity(intent);
     }
 
 
     private void initViews() {
         recipes = getIntent().getParcelableExtra(Constant.RECIPE);
         if (recipes != null) {
-            stepsAdapter = new StepsAdapter(DetailsActivity.this, recipes.getSteps());
-            ingredientsAdapter = new IngredientsAdapter(DetailsActivity.this,
-                    recipes.getIngredients());
+            stepsAdapter = new StepsAdapter(recipes.getSteps(), this);
+            ingredientsAdapter = new IngredientsAdapter(recipes.getIngredients());
         }
     }
 

@@ -16,15 +16,13 @@ import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
-    private final List<Recipe> mRecipeList;
+    private final List<Recipe> recipeList;
     private final OnAdapterClick onAdapterClick;
-
     // Constructor for our MainAdapter
-    public MainAdapter(List<Recipe> mRecipeList, OnAdapterClick onAdapterClick) {
-        this.mRecipeList = mRecipeList;
+    public MainAdapter(List<Recipe> recipeList, OnAdapterClick onAdapterClick) {
+        this.recipeList = recipeList;
         this.onAdapterClick = onAdapterClick;
     }
-
 
     @NonNull
     @Override
@@ -35,11 +33,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
-        holder.bind(mRecipeList.get(position));
+        holder.bind(recipeList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mRecipeList.size();
+        return recipeList.size();
     }
 }

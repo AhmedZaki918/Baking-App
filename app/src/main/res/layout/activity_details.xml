@@ -140,12 +140,11 @@
 
 
         <!-- Back button -->
-        <ImageView
+        <ImageButton
             android:id="@+id/iv_back"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:contentDescription="@string/back_button"
             android:elevation="8dp"
             app:layout_constraintStart_toStartOf="parent"
